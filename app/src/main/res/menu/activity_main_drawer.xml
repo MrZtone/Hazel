@@ -3,45 +3,49 @@
 
 
     <item android:title="Pågående köp">
-        <menu>
-            <item android:id="@+id/nav_camara" android:icon="@android:drawable/ic_menu_camera"
+        <menu android:id="@+id/ongoing_pur">
+            <item android:id="@+id/ongoing_pur1" android:icon="@android:drawable/ic_menu_camera"
                 android:title="Import" />
-            <item android:id="@+id/nav_gallery" android:icon="@android:drawable/ic_menu_gallery"
+            <item android:id="@+id/ongoing_pur2" android:icon="@android:drawable/ic_menu_gallery"
                 android:title="Gallery" />
-            <item android:id="@+id/nav_slideshow" android:icon="@android:drawable/ic_menu_slideshow"
+            <item android:id="@+id/ongoing_pur3" android:icon="@android:drawable/ic_menu_slideshow"
                 android:title="Slideshow" />
-            <item android:id="@+id/nav_manage" android:icon="@android:drawable/ic_menu_manage"
-                android:title="Tools" />
         </menu>
     </item>
 
 
     <item android:title="Pågående försäljningar">
-        <menu>
-            <item android:id="@+id/nav_share" android:icon="@android:drawable/ic_menu_share"
+        <menu android:id="@+id/ongoing_sell">
+            <item android:id="@+id/ongoing_sell1" android:icon="@android:drawable/ic_menu_share"
                 android:title="Share" />
-            <item android:id="@+id/nav_send" android:icon="@android:drawable/ic_menu_send"
+            <item android:id="@+id/ongoing_sell2" android:icon="@android:drawable/ic_menu_send"
                 android:title="Send" />
         </menu>
     </item>
 
     <item android:title="Letar köpare">
-        <menu>
-            <item android:id="@+id/suming" android:icon="@drawable/side_nav_bar"
+        <menu android:id="@+id/search_pur">
+            <item android:id="@+id/search_pur1" android:icon="@drawable/side_nav_bar"
+                android:title="Share" />
+            <item android:id="@+id/search_pur2" android:icon="@drawable/side_nav_bar"
                 android:title="Share" />
         </menu>
     </item>
 
     <item android:title="Letar försäljare">
-        <menu>
-            <item android:id="@+id/sumingelse"  android:icon="@drawable/pending"
+        <menu android:id="@+id/search_sell">
+            <item android:id="@+id/search_sell1"  android:icon="@drawable/pending"
+                android:title="Share" />
+            <item android:id="@+id/search_sell2"  android:icon="@drawable/pending"
                 android:title="Share" />
         </menu>
     </item>
 
     <item android:title="Senaste affärerna">
-        <menu>
-            <item android:id="@+id/sumingmore" android:icon="@android:drawable/ic_menu_share"
+        <menu android:id="@+id/latest">
+            <item android:id="@+id/latest1" android:icon="@android:drawable/ic_menu_share"
+                android:title="Share" />
+            <item android:id="@+id/latest2" android:icon="@android:drawable/ic_menu_share"
                 android:title="Share" />
         </menu>
     </item>

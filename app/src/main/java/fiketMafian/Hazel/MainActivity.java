@@ -67,24 +67,36 @@ public class MainActivity extends AppCompatActivity
         tabLayout.setupWithViewPager(mViewPager);
 
         //ska sätta ikoner i drawern
-        Menu studd = navigationView.getMenu();
-        Resources r = getResources();
-        for(int i=0;i<studd.size();++i)
+        int[] menuIds = new int[11];
+        Drawable[] icons= new Drawable[11];
+
+        menuIds[0]=R.id.ongoing_pur1;
+        menuIds[1]=R.id.ongoing_pur2;
+        menuIds[2]=R.id.ongoing_pur3;
+        menuIds[3]=R.id.ongoing_sell1;
+        menuIds[4]=R.id.ongoing_sell2;
+        menuIds[5]=R.id.search_pur1;
+        menuIds[6]=R.id.search_pur2;
+        menuIds[7]=R.id.search_sell1;
+        menuIds[8]=R.id.search_sell2;
+        menuIds[9]=R.id.latest1;
+        menuIds[10]=R.id.latest2;
+        Menu drawerMenu= navigationView.getMenu();
+
+        for(int i=0;i<icons.length;++i)
         {
-            MenuItem stuff=studd.getItem(i);
-            Menu stuss= stuff.getSubMenu();
-            for(int j=0;j<stuss.size();++j)
-            {
-                MenuItem stupp=studd.getItem(j);
-                Drawable[] layers = new Drawable[2];
-                layers[0] = r.getDrawable(R.drawable.side_nav_bar);
-                layers[1] = r.getDrawable(R.drawable.circle);
-                LayerDrawable layerDrawable = new LayerDrawable(layers);
-                stupp.setIcon(layerDrawable);
-            }
+            icons[i] =getDrawable(R.drawable.side_nav_bar);
         }
 
-
+        for(int i=0;i<menuIds.length;++i)
+        {
+            MenuItem temp =drawerMenu.findItem(menuIds[i]);
+            Drawable[] layers = new Drawable[2];
+            layers[0] = icons[i];
+            layers[1] = getDrawable(R.drawable.circle);
+            LayerDrawable layerDrawable = new LayerDrawable(layers);
+            temp.setIcon(layerDrawable);
+        }
     }
 
     @Override
@@ -125,17 +137,17 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camara) {
+        if (id == R.id.ongoing_pur1) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.ongoing_pur2) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.ongoing_pur3) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.ongoing_sell1) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.ongoing_sell2) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.search_pur1) {
 
         }
 
