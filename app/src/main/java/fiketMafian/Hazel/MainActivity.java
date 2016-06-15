@@ -19,8 +19,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import fiketMafian.Hazel.RoundImage;
 
 
 public class MainActivity extends AppCompatActivity
@@ -35,6 +41,9 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Drawable[] layers = new Drawable[2];
+        layers[1] = getDrawable(R.drawable.circle);
 
         /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -66,37 +75,37 @@ public class MainActivity extends AppCompatActivity
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        //ska sätta ikoner i drawern
-        int[] menuIds = new int[11];
-        Drawable[] icons= new Drawable[11];
+        //profil
+        ImageView profile = (ImageView) findViewById(R.id.imageView);
+        Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable.adam);
+        RoundImage roundedImage = new RoundImage(bm);
+        profile.setImageDrawable(roundedImage);
 
-        menuIds[0]=R.id.ongoing_pur1;
-        menuIds[1]=R.id.ongoing_pur2;
-        menuIds[2]=R.id.ongoing_pur3;
-        menuIds[3]=R.id.ongoing_sell1;
-        menuIds[4]=R.id.ongoing_sell2;
-        menuIds[5]=R.id.search_pur1;
-        menuIds[6]=R.id.search_pur2;
-        menuIds[7]=R.id.search_sell1;
-        menuIds[8]=R.id.search_sell2;
-        menuIds[9]=R.id.latest1;
-        menuIds[10]=R.id.latest2;
+
+
+        //drawer
+
         Menu drawerMenu= navigationView.getMenu();
+        SubMenu submenuru;
 
-        for(int i=0;i<icons.length;++i)
-        {
-            icons[i] =getDrawable(R.drawable.side_nav_bar);
-        }
+         submenuru = drawerMenu.addSubMenu("Pågående köp");
+        layers[0]=getDrawable(R.drawable.erik);
+        submenuru.add(Menu.NONE,1,Menu.NONE,"Erik").setIcon(new LayerDrawable(layers));
+        layers[0]=getDrawable(R.drawable.sven);
+        submenuru.add(Menu.NONE, 2, Menu.NONE, "Sven").setIcon(new LayerDrawable(layers));
+        submenuru= drawerMenu.addSubMenu("Pågående Försäljningar");
+        layers[0]=getDrawable(R.drawable.karim);
+        submenuru.add(Menu.NONE, 11, Menu.NONE, "Karim").setIcon(new LayerDrawable(layers));
+        layers[0]=getDrawable(R.drawable.ola);
+        submenuru.add(Menu.NONE, 12, Menu.NONE, "Ola").setIcon(new LayerDrawable(layers));
+        submenuru = drawerMenu.addSubMenu("Letar köpare");
+        submenuru.add(Menu.NONE, 21, Menu.NONE, "TNA005").setIcon(R.drawable.pending);
+        submenuru.add(Menu.NONE, 22, Menu.NONE, "TND012").setIcon(R.drawable.pending);
+        submenuru = drawerMenu.addSubMenu("Letar försäljare");
+        submenuru.add(Menu.NONE, 31, Menu.NONE, "TND002").setIcon(R.drawable.pending);
+        submenuru = drawerMenu.addSubMenu("Senaste affärerna");
+        submenuru.add(Menu.NONE, 41, Menu.NONE, "someonea").setIcon(R.drawable.sell);
 
-        for(int i=0;i<menuIds.length;++i)
-        {
-            MenuItem temp =drawerMenu.findItem(menuIds[i]);
-            Drawable[] layers = new Drawable[2];
-            layers[0] = icons[i];
-            layers[1] = getDrawable(R.drawable.circle);
-            LayerDrawable layerDrawable = new LayerDrawable(layers);
-            temp.setIcon(layerDrawable);
-        }
     }
 
     @Override
@@ -136,7 +145,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        /*
         if (id == R.id.ongoing_pur1) {
             // Handle the camera action
         } else if (id == R.id.ongoing_pur2) {
@@ -150,6 +159,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.search_pur1) {
 
         }
+        */
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
