@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:id="@+id/horizontalScrollView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:fillViewport="false"
+        android:background="@drawable/bookborder">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView3"
+                android:clickable="true"
+                android:src="@drawable/book"
+                android:layout_marginLeft="150dp"
+                android:layout_marginRight="10dp" />
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView2"
+                android:clickable="true"
+                android:src="@drawable/book"
+                android:layout_marginRight="10dp" />
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView4"
+                android:clickable="true"
+                android:src="@drawable/book"
+                android:layout_marginRight="10dp" />
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView5"
+                android:clickable="true"
+                android:src="@drawable/book"
+                android:layout_marginRight="150dp" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/horizontalScrollView"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/relativeLayout"
+        android:layout_marginTop="20dp">
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Book"
+            android:id="@+id/booktitle"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_alignStart="@+id/author" />
+
+
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Booker McBookface" android:id="@+id/author"
+            android:textColor="@color/abc_secondary_text_material_light"
+            style="@style/Base.TextAppearance.AppCompat.Inverse"
+            android:layout_below="@+id/booktitle"
+            android:layout_centerHorizontal="true" />
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Released 2017" android:id="@+id/release"
+            android:textColor="@color/abc_secondary_text_material_light"
+            style="@style/Base.TextAppearance.AppCompat.Inverse"
+            android:layout_below="@+id/author"
+            android:layout_alignStart="@+id/author" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/fallleaves">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/bookrate"
+            android:layout_gravity="center_horizontal"
+            android:text="Vilket skick är boken i?" />
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ratingBar"
+            android:layout_gravity="center_horizontal"
+            android:numStars="5"
+            android:layout_marginTop="20dp"
+            android:stepSize="1.0"
+            android:theme="@style/RatingBar" />
+
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:background="@color/sellPrimary"
+            android:text="Sälj"
+            android:id="@+id/button"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            style="@style/Base.TextAppearance.AppCompat.Large.Inverse" />
+
+    </LinearLayout>
+
+</RelativeLayout>

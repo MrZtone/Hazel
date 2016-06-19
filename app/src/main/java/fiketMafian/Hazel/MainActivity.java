@@ -25,8 +25,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.design.widget.AppBarLayout;
 import android.os.Bundle;
 import fiketMafian.Hazel.RoundImage;
+import 	android.support.design.widget.TabLayout.TabLayoutOnPageChangeListener;
+
 
 
 public class MainActivity extends AppCompatActivity
@@ -39,7 +42,8 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final AppBarLayout appbar = (AppBarLayout) findViewById(R.id.appbar);
         setSupportActionBar(toolbar);
 
         Drawable[] layers = new Drawable[2];
@@ -74,10 +78,35 @@ public class MainActivity extends AppCompatActivity
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0) {
+                    toolbar.setBackgroundColor(getResources().getColor(R.color.buyPrimary));
+                    appbar.setBackgroundColor(getResources().getColor(R.color.buyPrimary));
+                    mViewPager.setCurrentItem(tab.getPosition());
+                } else {
+                    //getApplication().setTheme(R.style.sellTheme);
+                    toolbar.setBackgroundColor(getResources().getColor(R.color.sellPrimary));
+                    appbar.setBackgroundColor(getResources().getColor(R.color.sellPrimary));
+                    mViewPager.setCurrentItem(tab.getPosition());
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         //profil
         ImageView profile = (ImageView) findViewById(R.id.imageView);
-        Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable.adam);
+        Bitmap bm = BitmapFactory.decodeResource(getResources(),R.drawable.ola);
         RoundImage roundedImage = new RoundImage(bm);
         profile.setImageDrawable(roundedImage);
 
@@ -88,24 +117,23 @@ public class MainActivity extends AppCompatActivity
         Menu drawerMenu= navigationView.getMenu();
         SubMenu submenuru;
 
-         submenuru = drawerMenu.addSubMenu("Pågående köp");
+        submenuru = drawerMenu.addSubMenu(Menu.NONE, 0, 0, "Pågående köp");
         layers[0]=getDrawable(R.drawable.erik);
         submenuru.add(Menu.NONE,1,Menu.NONE,"Erik").setIcon(new LayerDrawable(layers));
         layers[0]=getDrawable(R.drawable.sven);
         submenuru.add(Menu.NONE, 2, Menu.NONE, "Sven").setIcon(new LayerDrawable(layers));
-        submenuru= drawerMenu.addSubMenu("Pågående Försäljningar");
+        submenuru = drawerMenu.addSubMenu(Menu.NONE, 10, 1, "Pågående Försäljningar");
         layers[0]=getDrawable(R.drawable.karim);
         submenuru.add(Menu.NONE, 11, Menu.NONE, "Karim").setIcon(new LayerDrawable(layers));
         layers[0]=getDrawable(R.drawable.ola);
         submenuru.add(Menu.NONE, 12, Menu.NONE, "Ola").setIcon(new LayerDrawable(layers));
-        submenuru = drawerMenu.addSubMenu("Letar köpare");
+        submenuru = drawerMenu.addSubMenu(Menu.NONE, 20, 2, "Letar köpare");
         submenuru.add(Menu.NONE, 21, Menu.NONE, "TNA005").setIcon(R.drawable.pending);
         submenuru.add(Menu.NONE, 22, Menu.NONE, "TND012").setIcon(R.drawable.pending);
-        submenuru = drawerMenu.addSubMenu("Letar försäljare");
+        submenuru = drawerMenu.addSubMenu(Menu.NONE, 30, 3, "Letar försäljare");
         submenuru.add(Menu.NONE, 31, Menu.NONE, "TND002").setIcon(R.drawable.pending);
-        submenuru = drawerMenu.addSubMenu("Senaste affärerna");
+        submenuru = drawerMenu.addSubMenu(Menu.NONE, 40, 4, "Senaste affärerna");
         submenuru.add(Menu.NONE, 41, Menu.NONE, "someonea").setIcon(R.drawable.sell);
-
     }
 
     @Override
@@ -185,7 +213,6 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return 2;
         }
 
@@ -229,10 +256,18 @@ public class MainActivity extends AppCompatActivity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            View rootView;
+            if(getArguments().getInt(ARG_SECTION_NUMBER)==1)
+            {
+                rootView = inflater.inflate(R.layout.buy, container, false);
+            }
+            else
+            {
+                rootView = inflater.inflate(R.layout.sell, container, false);
+            }
             return rootView;
         }
     }
+
+
 }
