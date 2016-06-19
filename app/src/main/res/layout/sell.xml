@@ -3,13 +3,26 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <SearchView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchView2"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="#ffffff"
+        android:clickable="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp" />
+
     <HorizontalScrollView
         android:layout_width="wrap_content"
-        android:layout_height="150dp"
+        android:layout_height="140dp"
         android:id="@+id/horizontalScrollView"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="60dp"
         android:fillViewport="false"
         android:background="@drawable/bookborder">
 
@@ -61,7 +74,7 @@
         android:layout_below="@+id/horizontalScrollView"
         android:layout_centerHorizontal="true"
         android:id="@+id/relativeLayout"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="15dp">
 
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="Book"
@@ -92,7 +105,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/relativeLayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/fallleaves">
 
         <TextView
