@@ -8,6 +8,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
+        <!--DET ÄR HÄR MAN SÄTTER TEMAT-->
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

@@ -8,63 +8,34 @@
         android:layout_height="wrap_content"
         android:id="@+id/searchView2"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:background="#ffffff"
         android:clickable="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
 
     <HorizontalScrollView
         android:layout_width="wrap_content"
         android:layout_height="140dp"
         android:id="@+id/horizontalScrollView"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:fillViewport="false"
-        android:background="@drawable/bookborder">
+        android:background="@drawable/bookborder"
+        android:layout_alignStart="@+id/searchView2"
+        android:layout_alignEnd="@+id/searchView2">
 
         <LinearLayout
+            android:id="@+id/bookgallery"
             android:orientation="horizontal"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:paddingTop="5dp"
             android:paddingBottom="5dp">
 
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView3"
-                android:clickable="true"
-                android:src="@drawable/book"
-                android:layout_marginLeft="150dp"
-                android:layout_marginRight="10dp" />
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView2"
-                android:clickable="true"
-                android:src="@drawable/book"
-                android:layout_marginRight="10dp" />
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView4"
-                android:clickable="true"
-                android:src="@drawable/book"
-                android:layout_marginRight="10dp" />
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView5"
-                android:clickable="true"
-                android:src="@drawable/book"
-                android:layout_marginRight="150dp" />
         </LinearLayout>
     </HorizontalScrollView>
 

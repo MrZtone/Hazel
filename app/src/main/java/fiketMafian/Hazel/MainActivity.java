@@ -3,6 +3,10 @@ package fiketMafian.Hazel;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
+import 	android.widget.LinearLayout.LayoutParams;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -22,6 +26,7 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -86,22 +91,15 @@ public class MainActivity extends AppCompatActivity
                     appbar.setBackgroundColor(getResources().getColor(R.color.buyPrimary));
                     mViewPager.setCurrentItem(tab.getPosition());
                 } else {
-                    //getApplication().setTheme(R.style.sellTheme);
                     toolbar.setBackgroundColor(getResources().getColor(R.color.sellPrimary));
                     appbar.setBackgroundColor(getResources().getColor(R.color.sellPrimary));
                     mViewPager.setCurrentItem(tab.getPosition());
                 }
             }
-
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
+            public void onTabUnselected(TabLayout.Tab tab) {}
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabReselected(TabLayout.Tab tab) {}
         });
 
         //profil
@@ -110,30 +108,28 @@ public class MainActivity extends AppCompatActivity
         RoundImage roundedImage = new RoundImage(bm);
         profile.setImageDrawable(roundedImage);
 
-
-
         //drawer
-
         Menu drawerMenu= navigationView.getMenu();
         SubMenu submenuru;
 
         submenuru = drawerMenu.addSubMenu(Menu.NONE, 0, 0, "Pågående köp");
         layers[0]=getDrawable(R.drawable.erik);
-        submenuru.add(Menu.NONE,1,Menu.NONE,"Erik").setIcon(new LayerDrawable(layers));
+        submenuru.add(Menu.NONE,View.generateViewId(),Menu.NONE,"Erik").setIcon(new LayerDrawable(layers));
         layers[0]=getDrawable(R.drawable.sven);
-        submenuru.add(Menu.NONE, 2, Menu.NONE, "Sven").setIcon(new LayerDrawable(layers));
-        submenuru = drawerMenu.addSubMenu(Menu.NONE, 10, 1, "Pågående Försäljningar");
+        submenuru.add(Menu.NONE, View.generateViewId(), Menu.NONE, "Sven").setIcon(new LayerDrawable(layers));
+        submenuru = drawerMenu.addSubMenu(Menu.NONE, View.generateViewId(), 1, "Pågående Försäljningar");
         layers[0]=getDrawable(R.drawable.karim);
-        submenuru.add(Menu.NONE, 11, Menu.NONE, "Karim").setIcon(new LayerDrawable(layers));
+        submenuru.add(Menu.NONE, View.generateViewId(), Menu.NONE, "Karim").setIcon(new LayerDrawable(layers));
         layers[0]=getDrawable(R.drawable.ola);
-        submenuru.add(Menu.NONE, 12, Menu.NONE, "Ola").setIcon(new LayerDrawable(layers));
-        submenuru = drawerMenu.addSubMenu(Menu.NONE, 20, 2, "Letar köpare");
-        submenuru.add(Menu.NONE, 21, Menu.NONE, "TNA005").setIcon(R.drawable.pending);
-        submenuru.add(Menu.NONE, 22, Menu.NONE, "TND012").setIcon(R.drawable.pending);
-        submenuru = drawerMenu.addSubMenu(Menu.NONE, 30, 3, "Letar försäljare");
-        submenuru.add(Menu.NONE, 31, Menu.NONE, "TND002").setIcon(R.drawable.pending);
-        submenuru = drawerMenu.addSubMenu(Menu.NONE, 40, 4, "Senaste affärerna");
-        submenuru.add(Menu.NONE, 41, Menu.NONE, "someonea").setIcon(R.drawable.sell);
+        submenuru.add(Menu.NONE, View.generateViewId(), Menu.NONE, "Ola").setIcon(new LayerDrawable(layers));
+        submenuru = drawerMenu.addSubMenu(Menu.NONE, View.generateViewId(), 2, "Letar köpare");
+        submenuru.add(Menu.NONE, View.generateViewId(), Menu.NONE, "TNA005").setIcon(R.drawable.pending);
+        submenuru.add(Menu.NONE, View.generateViewId(), Menu.NONE, "TND012").setIcon(R.drawable.pending);
+        submenuru = drawerMenu.addSubMenu(Menu.NONE, View.generateViewId(), 3, "Letar försäljare");
+        submenuru.add(Menu.NONE, View.generateViewId(), Menu.NONE, "TND002").setIcon(R.drawable.pending);
+        submenuru = drawerMenu.addSubMenu(Menu.NONE, View.generateViewId(), 4, "Senaste affärerna");
+        submenuru.add(Menu.NONE, View.generateViewId(), Menu.NONE, "someonea").setIcon(R.drawable.sell);
+
     }
 
     @Override
@@ -264,6 +260,28 @@ public class MainActivity extends AppCompatActivity
             else
             {
                 rootView = inflater.inflate(R.layout.sell, container, false);
+
+                Resources r = getResources();
+                LinearLayout bookGallery = (LinearLayout) rootView.findViewById(R.id.bookgallery);
+                Drawable[] layers = new Drawable[2];
+                layers[1] = r.getDrawable(R.drawable.bookselected);
+                layers[0]=r.getDrawable(R.drawable.book);
+
+                ImageView bookT = (ImageView) inflater.inflate(R.layout.gallery_template, bookGallery, false);
+                bookT.setImageDrawable(r.getDrawable(R.drawable.book));
+                bookT.setId(View.generateViewId());
+                bookGallery.addView(bookT);
+
+                ImageView book1= (ImageView) inflater.inflate(R.layout.gallery_template, bookGallery, false);
+                book1.setImageDrawable(new LayerDrawable(layers));
+                book1.setId(View.generateViewId());
+                bookGallery.addView(book1);
+
+                ImageView book2= (ImageView) inflater.inflate(R.layout.gallery_template, bookGallery, false);
+                book2.setImageDrawable(r.getDrawable(R.drawable.book));
+                book2.setId(View.generateViewId());
+                bookGallery.addView(book2);
+
             }
             return rootView;
         }
