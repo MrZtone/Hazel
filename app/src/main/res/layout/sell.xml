@@ -26,7 +26,8 @@
         android:fillViewport="false"
         android:background="@drawable/bookborder"
         android:layout_alignStart="@+id/searchView2"
-        android:layout_alignEnd="@+id/searchView2">
+        android:layout_alignEnd="@+id/searchView2"
+        >
 
         <LinearLayout
             android:id="@+id/bookgallery"
@@ -51,7 +52,8 @@
             android:text="Book"
             android:id="@+id/booktitle"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_alignStart="@+id/author" />
+            android:layout_alignStart="@+id/author"
+            android:enabled="false"/>
 
 
 
@@ -60,14 +62,16 @@
             android:textColor="@color/abc_secondary_text_material_light"
             style="@style/Base.TextAppearance.AppCompat.Inverse"
             android:layout_below="@+id/booktitle"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:enabled="false"/>
 
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="Released 2017" android:id="@+id/release"
             android:textColor="@color/abc_secondary_text_material_light"
             style="@style/Base.TextAppearance.AppCompat.Inverse"
             android:layout_below="@+id/author"
-            android:layout_alignStart="@+id/author" />
+            android:layout_alignStart="@+id/author"
+            android:enabled="false"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -85,7 +89,8 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/bookrate"
             android:layout_gravity="center_horizontal"
-            android:text="Vilket skick är boken i?" />
+            android:text="Vilket skick är boken i?"
+            android:enabled="false"/>
 
         <RatingBar
             android:layout_width="wrap_content"
@@ -95,7 +100,9 @@
             android:numStars="5"
             android:layout_marginTop="20dp"
             android:stepSize="1.0"
-            android:theme="@style/RatingBar" />
+            android:theme="@style/RatingBarDisabled"
+            android:isIndicator="true"
+            />
 
         <Button
             android:layout_width="250dp"
@@ -105,7 +112,8 @@
             android:id="@+id/button"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="60dp"
-            style="@style/Base.TextAppearance.AppCompat.Large.Inverse" />
+            style="@style/Base.TextAppearance.AppCompat.Large.Inverse"
+            android:enabled="false"/>
 
     </LinearLayout>
 

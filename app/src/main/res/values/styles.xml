@@ -31,7 +31,12 @@
 
     <style name="RatingBar" parent="Theme.AppCompat">
         <item name="colorControlNormal">@color/sellPrimaryDark</item>
-        <item name="colorControlActivated">@android:color/background_dark</item>
+        <item name="colorControlActivated">@color/sellPrimary</item>
+    </style>
+
+    <style name="RatingBarDisabled" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@android:color/darker_gray</item>
+        <item name="colorControlActivated">@android:color/darker_gray</item>
     </style>
 
     <style name="Name" parent="@android:style/TextAppearance.Medium">

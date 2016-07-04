@@ -1,9 +1,13 @@
 package fiketMafian.Hazel;
 
+import android.app.SearchManager;
+import android.content.ComponentName;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.WindowManager;
 import 	android.widget.LinearLayout.LayoutParams;
 import android.media.Image;
@@ -27,6 +31,7 @@ import android.view.SubMenu;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -34,6 +39,7 @@ import android.support.design.widget.AppBarLayout;
 import android.os.Bundle;
 import fiketMafian.Hazel.RoundImage;
 import 	android.support.design.widget.TabLayout.TabLayoutOnPageChangeListener;
+import android.content.Context;
 
 
 
@@ -53,6 +59,7 @@ public class MainActivity extends AppCompatActivity
 
         Drawable[] layers = new Drawable[2];
         layers[1] = getDrawable(R.drawable.circle);
+
 
         /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -190,6 +197,30 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        Log.d("onnewintent", "onnewintent");
+        //System.out.println("onnewintent");
+        setIntent(intent);
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            //use the query to search your data somehow
+        }
+    }
+
+    /*
+    @Override
+    public boolean onSearchRequested() {
+        System.out.print("Search Requested");
+        return super.onSearchRequested();
+    }
+    */
+
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -256,6 +287,14 @@ public class MainActivity extends AppCompatActivity
             if(getArguments().getInt(ARG_SECTION_NUMBER)==1)
             {
                 rootView = inflater.inflate(R.layout.buy, container, false);
+
+                // Get the SearchView and set the searchable configuration
+                SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+                SearchView searchView = (SearchView) rootView.findViewById(R.id.searchView);
+
+                ComponentName component = new ComponentName(getContext(), MainActivity.class);
+                searchView.setSearchableInfo(searchManager.getSearchableInfo(component));
+                searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
             }
             else
             {
