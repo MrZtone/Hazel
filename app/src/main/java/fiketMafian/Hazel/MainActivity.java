@@ -200,7 +200,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onNewIntent(Intent intent) {
         Log.d("onnewintent", "onnewintent");
-        //System.out.println("onnewintent");
         setIntent(intent);
         handleIntent(intent);
     }
@@ -209,6 +208,15 @@ public class MainActivity extends AppCompatActivity
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             //use the query to search your data somehow
+            TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+            if(tabLayout.getSelectedTabPosition()==0)
+            {
+                System.out.println("buy");
+            }
+            else
+            {
+                System.out.println("sell");
+            }
         }
     }
 
@@ -299,6 +307,14 @@ public class MainActivity extends AppCompatActivity
             else
             {
                 rootView = inflater.inflate(R.layout.sell, container, false);
+
+                // Get the SearchView and set the searchable configuration
+                SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+                SearchView searchView = (SearchView) rootView.findViewById(R.id.searchView2);
+
+                ComponentName component = new ComponentName(getContext(), MainActivity.class);
+                searchView.setSearchableInfo(searchManager.getSearchableInfo(component));
+                searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
 
                 Resources r = getResources();
                 LinearLayout bookGallery = (LinearLayout) rootView.findViewById(R.id.bookgallery);
