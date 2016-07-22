@@ -11,8 +11,8 @@
         android:background="#ffffff"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginStart="@dimen/searchbar_margin"
+        android:layout_marginEnd="@dimen/searchbar_margin"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />
 
@@ -28,6 +28,7 @@
         android:background="@drawable/bookborder"
         android:layout_alignStart="@+id/searchView2"
         android:layout_alignEnd="@+id/searchView2"
+        android:scrollbars="none"
         >
 
         <LinearLayout
@@ -51,27 +52,25 @@
 
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="Book"
-            android:id="@+id/booktitle"
+            android:id="@+id/title_sell"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_alignStart="@+id/author"
-            android:enabled="false"/>
+            android:layout_alignStart="@+id/author_sell"
+            android:enabled="false" />
 
 
 
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Booker McBookface" android:id="@+id/author"
-            android:textColor="@color/abc_secondary_text_material_light"
-            style="@style/Base.TextAppearance.AppCompat.Inverse"
-            android:layout_below="@+id/booktitle"
+            android:text="Booker McBookface" android:id="@+id/author_sell"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_below="@+id/title_sell"
             android:layout_centerHorizontal="true"
             android:enabled="false"/>
 
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Released 2017" android:id="@+id/release"
-            android:textColor="@color/abc_secondary_text_material_light"
-            style="@style/Base.TextAppearance.AppCompat.Inverse"
-            android:layout_below="@+id/author"
-            android:layout_alignStart="@+id/author"
+            android:text="Released 2017" android:id="@+id/release_sell"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_below="@+id/author_sell"
+            android:layout_alignStart="@+id/author_sell"
             android:enabled="false"/>
     </RelativeLayout>
 
@@ -101,7 +100,7 @@
             android:numStars="5"
             android:layout_marginTop="20dp"
             android:stepSize="1.0"
-            android:theme="@style/RatingBarDisabled"
+            android:theme="@style/RatingBar"
             android:isIndicator="true"
             />
 

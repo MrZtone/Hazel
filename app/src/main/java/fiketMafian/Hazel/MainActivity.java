@@ -1,16 +1,15 @@
 package fiketMafian.Hazel;
 
+import android.animation.ObjectAnimator;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.WindowManager;
-import 	android.widget.LinearLayout.LayoutParams;
-import android.media.Image;
+import android.view.ViewTreeObserver;
+import android.widget.EditText;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -31,23 +30,27 @@ import android.view.SubMenu;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.SearchView;
-import android.widget.TextView;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.design.widget.AppBarLayout;
-import android.os.Bundle;
-import fiketMafian.Hazel.RoundImage;
-import 	android.support.design.widget.TabLayout.TabLayoutOnPageChangeListener;
 import android.content.Context;
-
+import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private ViewPager mViewPager;
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    public static float searchBarHeight=0f;
+
+    public static final int BUY=0;
+    public static final int SELL=1;
+
+    public static final int UP=0;
+    public static final int DOWN=1;
+    private static boolean searchBarElevated=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,29 @@ public class MainActivity extends AppCompatActivity
 
         Drawable[] layers = new Drawable[2];
         layers[1] = getDrawable(R.drawable.circle);
+
+        ViewTreeObserver vto = getWindow().getDecorView().getRootView().getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+
+                searchBarHeight=findViewById(R.id.search_container).getY();
+                SearchView searchbar = (SearchView) findViewById(R.id.searchView);
+                int id = searchbar.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
+                EditText editText = (EditText) searchbar.findViewById(id);
+                editText.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(!searchBarElevated)
+                        {
+                            MoveSearchBar(UP);
+                        }
+                    }
+                });
+
+                getWindow().getDecorView().getRootView().getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
 
 
         /*
@@ -82,25 +108,30 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
 
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        toolbar.setBackgroundColor(getResources().getColor(R.color.buyPrimary));
+        appbar.setBackgroundColor(getResources().getColor(R.color.buyPrimary));
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getPosition() == 0) {
+                if (tab.getPosition() == BUY) {
                     toolbar.setBackgroundColor(getResources().getColor(R.color.buyPrimary));
                     appbar.setBackgroundColor(getResources().getColor(R.color.buyPrimary));
                     mViewPager.setCurrentItem(tab.getPosition());
-                } else {
+                    ActivateSell(false);
+                } else { //SELL
                     toolbar.setBackgroundColor(getResources().getColor(R.color.sellPrimary));
                     appbar.setBackgroundColor(getResources().getColor(R.color.sellPrimary));
                     mViewPager.setCurrentItem(tab.getPosition());
+                    MoveSearchBar(DOWN);
                 }
             }
             @Override
@@ -145,7 +176,14 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if(searchBarElevated)
+            {
+                MoveSearchBar(DOWN);
+            }
+            else
+            {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -209,24 +247,115 @@ public class MainActivity extends AppCompatActivity
             String query = intent.getStringExtra(SearchManager.QUERY);
             //use the query to search your data somehow
             TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-            if(tabLayout.getSelectedTabPosition()==0)
+
+            if(tabLayout.getSelectedTabPosition()==MainActivity.BUY)
             {
                 System.out.println("buy");
-            }
-            else
+                MoveSearchBar(UP);
+                setCard("Title" , "Author", "TNX000", "Course");
+                setCard("Title" , "Author", "TNX000", "Course");
+                setCard("Title" , "Author", "TNX000", "Course");
+                setCard("Title" , "Author", "TNX000", "Course");
+                setCard("Title" , "Author", "TNX000", "Course");
+                setCard("Title" , "Author", "TNX000", "Course");
+            } else //SELL
             {
+                ActivateSell(true);
                 System.out.println("sell");
             }
         }
     }
 
-    /*
-    @Override
-    public boolean onSearchRequested() {
-        System.out.print("Search Requested");
-        return super.onSearchRequested();
+    private void setCard(String title, String author, String courseCode, String course)
+    {
+        // add Image
+        ViewGroup searchResults = (ViewGroup) findViewById(R.id.search_results);
+        LayoutInflater lf = getLayoutInflater();
+        View card = lf.inflate(R.layout.book_card_template, searchResults, false);
+        TextView Title = (TextView) card.findViewById(R.id.title_buy);
+        Title.setText(title);
+        TextView Author = (TextView) card.findViewById(R.id.author_buy);
+        Author.setText(author);
+        TextView CouresCode = (TextView) card.findViewById(R.id.coursecode_buy);
+        CouresCode.setText(courseCode);
+        TextView Course = (TextView) card.findViewById(R.id.course_buy);
+        Course.setText(course);
+        searchResults.addView(card);
     }
-    */
+    private void MoveSearchBar(int Direction)
+    {
+        View searchContainer = findViewById(R.id.search_container);
+        View searchBackground = findViewById(R.id.search_background);
+        float y=searchContainer.getY();
+        float alpha =0f;
+        ViewGroup searchResults = (ViewGroup) findViewById(R.id.search_results);
+        searchResults.removeAllViews();
+        if(Direction==UP)
+        {
+            y=-50f;
+            searchBarElevated=true;
+        }
+        else if(Direction==DOWN)
+        {
+            alpha=1f;
+            y=searchBarHeight;
+            searchBarElevated=false;
+            SearchView s = (SearchView) findViewById(R.id.searchView);
+            s.setQuery("",false);
+
+        }
+        ObjectAnimator animY = ObjectAnimator.ofFloat(searchContainer, "y", y);
+        animY.setDuration(500);
+        ObjectAnimator animAlpha = ObjectAnimator.ofFloat(searchBackground, "alpha", alpha);
+        animAlpha.setDuration(500);
+        animY.start();
+        animAlpha.start();
+
+    }
+
+    void ActivateSell(boolean Activate)
+    {
+
+        findViewById(R.id.title_sell).setEnabled(Activate);
+        findViewById(R.id.author_sell).setEnabled(Activate);
+        findViewById(R.id.release_sell).setEnabled(Activate);
+        findViewById(R.id.bookrate).setEnabled(Activate);
+        findViewById(R.id.button).setEnabled(Activate);
+        RatingBar rate = (RatingBar) findViewById(R.id.ratingBar);
+        rate.setIsIndicator(!Activate);
+        if(Activate)
+        {
+            Resources r = getResources();
+            LinearLayout bookGallery = (LinearLayout) findViewById(R.id.bookgallery);
+            LayoutInflater lf = getLayoutInflater();
+            Drawable[] layers = new Drawable[2];
+            layers[1] = r.getDrawable(R.drawable.bookselected);
+            layers[0]=r.getDrawable(R.drawable.book);
+
+            ImageView book1 = (ImageView) lf.inflate(R.layout.gallery_template, bookGallery, false);
+            book1.setImageDrawable(r.getDrawable(R.drawable.book));
+            book1.setId(View.generateViewId());
+            bookGallery.addView(book1);
+
+            ImageView book2= (ImageView) lf.inflate(R.layout.gallery_template, bookGallery, false);
+            book2.setImageDrawable(r.getDrawable(R.drawable.book));
+            book2.setId(View.generateViewId());
+            bookGallery.addView(book2);
+
+            ImageView book3= (ImageView) lf.inflate(R.layout.gallery_template, bookGallery, false);
+            book3.setImageDrawable(new LayerDrawable(layers));
+            book3.setId(View.generateViewId());
+            bookGallery.addView(book3);
+        }
+        else
+        {
+            ViewGroup bookGallery = (ViewGroup) findViewById(R.id.bookgallery);
+            bookGallery.removeAllViews();
+            SearchView s = (SearchView) findViewById(R.id.searchView2);
+            s.setQuery("", false);
+            rate.setRating(0f);
+        }
+    }
 
 
     /**
@@ -243,7 +372,7 @@ public class MainActivity extends AppCompatActivity
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            return PlaceholderFragment.newInstance(position);
         }
 
         @Override
@@ -254,9 +383,9 @@ public class MainActivity extends AppCompatActivity
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
-                case 0:
+                case MainActivity.BUY:
                     return "KÖP";
-                case 1:
+                case MainActivity.SELL:
                     return "SÄLJ";
             }
             return null;
@@ -292,7 +421,7 @@ public class MainActivity extends AppCompatActivity
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView;
-            if(getArguments().getInt(ARG_SECTION_NUMBER)==1)
+            if(getArguments().getInt(ARG_SECTION_NUMBER)==MainActivity.BUY)
             {
                 rootView = inflater.inflate(R.layout.buy, container, false);
 
@@ -315,27 +444,6 @@ public class MainActivity extends AppCompatActivity
                 ComponentName component = new ComponentName(getContext(), MainActivity.class);
                 searchView.setSearchableInfo(searchManager.getSearchableInfo(component));
                 searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
-
-                Resources r = getResources();
-                LinearLayout bookGallery = (LinearLayout) rootView.findViewById(R.id.bookgallery);
-                Drawable[] layers = new Drawable[2];
-                layers[1] = r.getDrawable(R.drawable.bookselected);
-                layers[0]=r.getDrawable(R.drawable.book);
-
-                ImageView bookT = (ImageView) inflater.inflate(R.layout.gallery_template, bookGallery, false);
-                bookT.setImageDrawable(r.getDrawable(R.drawable.book));
-                bookT.setId(View.generateViewId());
-                bookGallery.addView(bookT);
-
-                ImageView book1= (ImageView) inflater.inflate(R.layout.gallery_template, bookGallery, false);
-                book1.setImageDrawable(new LayerDrawable(layers));
-                book1.setId(View.generateViewId());
-                bookGallery.addView(book1);
-
-                ImageView book2= (ImageView) inflater.inflate(R.layout.gallery_template, bookGallery, false);
-                book2.setImageDrawable(r.getDrawable(R.drawable.book));
-                book2.setId(View.generateViewId());
-                bookGallery.addView(book2);
 
             }
             return rootView;
